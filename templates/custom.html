@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>Create custom Cost Report dataset</h2>
+    <h3>Enter Column and Line Number to add variable to Dataset</h3>
+    <div>
+        <form action="" method="post">
+            {{fields_form.hidden_tag()}}
+            <fieldset>
+                <legend>Worksheet S-2 Part 1</legend>
+                <div class='form-field'>
+                    {{fields_form.var_name.label}}
+                    {{fields_form.var_name}}
+                </div>
+                <div class='form-field'>
+                    {{fields_form.line_number.label}}
+                    {{fields_form.line_number}}
+                </div>
+                <div class='form-field'>
+                    {{fields_form.column_number.label}}
+                    {{fields_form.column_number}}
+                </div>
+                <div>
+                    {{fields_form.submit}}
+                </div>
+            </fieldset>
+        </form>
+        <form action="" method="post">
+            {{clear_form.hidden_tag()}}
+            <div class="form-field">
+                {{clear_form.clear}}
+            </div>
+        </form>
+    </div>
+    <div class='var-container'>
+        <p class="var-field">Data Cart:</p>
+        {% for var, field in fields.items() %}
+        <p class='var-field'>[Variable: {{var}}],[Line Number: '{{field['line_num']}}'],[Column Number: '{{field['clmn_num']}}']</p>
+        {% endfor %}
+    </div>
+    <form action="" method="post">
+        {{create_form.hidden_tag()}}
+        <div class = form-field>
+            {{create_form.create}}
+        </div>
+    </form>
+
+{% endblock %}

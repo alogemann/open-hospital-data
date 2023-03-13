@@ -1,0 +1,13 @@
+#saved testing datasets
+/static/data
+*.csv
+
+#pycache
+/__pycache__
+
+#environment
+/venv
+
+#keys
+keys.py
+
