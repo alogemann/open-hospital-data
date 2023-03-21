@@ -11,3 +11,5 @@
 #keys
 keys.py
 
+#misc
+.DS_Store
