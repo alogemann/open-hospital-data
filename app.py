@@ -1,4 +1,4 @@
-import psycopg as sql
+import sqlite3 as sql
 from flask import Flask, render_template, redirect, send_file, url_for, flash
 from forms import ClearForm, FieldsForm, CreateForm
 from helpers import format_field
@@ -35,16 +35,16 @@ def custom():
             FIELDS[f'Variable-{len(FIELDS)+1}'] = new_var
         return redirect(url_for('custom'))
     
-    elif create_form.validate_on_submit() and create_form.create.data:
+    elif create_form.validate_on_submit():
         flash('Your dataset is being created.')
-        con = sql.connect(CONNECTION_STRING)
+        con = sql.connect('cost_reports.db')
         base_df = load_data(FIELDS,con)
         new_df = make_data(base_df,FIELDS,con)
         new_df.to_csv('static/data.csv', index=False)
         con.close()
         return send_file('static/data.csv', as_attachment=True)  
     
-    elif clear_form.validate_on_submit() and clear_form.clear.data:
+    elif clear_form.validate_on_submit():
         FIELDS = {}
         return redirect(url_for('custom'))
     

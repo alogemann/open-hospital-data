@@ -13,3 +13,6 @@ keys.py
 
 #misc
 .DS_Store
+
+#sqlite db in devlopment
+cost_reports.db

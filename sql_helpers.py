@@ -6,7 +6,7 @@ def load_data(data, con):
         cur.execute(f"""
             create table {key} as
             select rpt_rec_num, itm_txt
-            from rpt_data_long 
+            from rpt_data
             where wksht_cd = '{value['wksht_cd']}' 
                 and line_num = '{value['line_num']}' 
                 and clmn_num = '{value['clmn_num']}'
