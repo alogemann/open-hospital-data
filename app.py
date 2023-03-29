@@ -3,7 +3,7 @@ from flask import Flask, render_template, redirect, send_file, url_for, flash
 from forms import ClearForm, FieldsForm, CreateForm
 from helpers import format_field
 from sql_helpers import load_data, make_data
-from keys import CONNECTION_STRING, SECRET_KEY
+from keys import DO_CONNECTION_STRING, SECRET_KEY
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = SECRET_KEY
