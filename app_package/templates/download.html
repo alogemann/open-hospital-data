@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Your Dataset has been created</h1>
+    <h2>Click below to download dataset</h2>
+    <div>
+        <form action="" method="post">
+            {{download_form.hidden_tag()}}
+            <div class="form-field">
+                {{download_form.download}}
+            </div>
+        </form>
+    </div>
+{% endblock %}
