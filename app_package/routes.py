@@ -5,7 +5,6 @@ from app_package import app, db
 from app_package.forms import ClearForm, FieldsForm, CreateForm, DownloadForm
 from app_package.models import Report_field
 from app_package.helpers import format_field
-from app_package.sql_helpers import load_data, make_data
 
 @app.get('/')
 @app.get('/index')
