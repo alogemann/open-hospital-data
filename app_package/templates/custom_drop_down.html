@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>Create custom Cost Report dataset</h2>
+    <h3>Select Worksheet then enter column and line number to add variable to dataset</h3>
+    <div>
+        <form action="" method="post">
+            {{wksht_form.hidden_tag()}}
+            <fieldset>
+                <div class="form-field">
+                    {{wksht_form.worksheet.label}}
+                    {{wksht_form.worksheet}}
+                </div>
+                <div>
+                    {{wksht_form.submit}}
+                </div>
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}

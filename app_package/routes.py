@@ -2,14 +2,31 @@ import pandas as pd
 from flask import render_template, redirect, send_file, url_for, request
 from sqlalchemy import text
 from app_package import app, db
-from app_package.forms import ClearForm, FieldsForm, CreateForm, DownloadForm
-from app_package.models import Report_field
+from app_package.forms import ClearForm, FieldsForm, CreateForm, DownloadForm, FacInfoForm
+from app_package.models import Report_field, Preset_Field
 from app_package.helpers import format_field
 
 @app.get('/')
 @app.get('/index')
 def index():
     return render_template('index.html')
+
+@app.route('/presets',methods=['GET','POST'])
+def presets():
+
+    fac_info_form = FacInfoForm()
+
+    if request.method=='GET':
+        return render_template('presets.html', fac_info_form=fac_info_form)
+
+    if fac_info_form.validate_on_submit():
+        print(fac_info_form.data['facility_info'])
+        for i in fac_info_form.data['facility_info']:
+            new_preset = Preset_Field(preset_name = i,
+                                      preset_src = 'fac_info')
+            db.session.add(new_preset)
+            db.session.commit()
+        return(redirect(url_for('custom')))
 
 @app.route('/custom', methods=['GET','POST'])
 def custom():
@@ -28,12 +45,12 @@ def custom():
                                create_form = create_form,
                                all_fields = all_fields)
 
-    ##Post Request
+    ##Post Requests
     if fields_form.validate_on_submit():
         new_field = Report_field(var_name = fields_form.var_name.data,
                                     wksht_cd = fields_form.worksheet.data,
-                                    line_num = fields_form.line_number.data,
-                                    clmn_num = fields_form.column_number.data)
+                                    line_num = format_field(fields_form.line_number.data),
+                                    clmn_num = format_field(fields_form.column_number.data))
         db.session.add(new_field)
         db.session.commit()
         return redirect(url_for('custom'))
@@ -53,7 +70,7 @@ def custom():
     
     else:
         return '<h1>ERROR</h1>'
-    
+
 @app.route('/download',methods=['GET','POST'])
 def download():
     download_form = DownloadForm()
@@ -72,3 +89,32 @@ def download():
         return send_file('static/custom.csv',as_attachment=True)
     else:
         return '<h1>ERROR</h1>'
+
+"""
+@app.route('/custom_select', methods=['GET','POST'])
+def custom_select():
+
+    wksht_form = WorksheetForm()
+    wksht_list = Worksheet_field.query.all()
+
+    form_list = []
+    for i in wksht_list:
+        form_list.append(Report_field(worksheet = i))
+
+    field_dict = {}
+    for i in wksht_list:
+        field_dict[i] = Report_field.query.all() #add where clause for whsht
+
+    if request.method == 'GET':
+        return render_template('custom_drop_down.html', 
+                               wksht_form = wksht_form,
+                               wksht_list = wksht_list,
+                               form_list = form_list,
+                               field_dict = field_dict)
+    
+    elif wksht_form.validate_on_submit():
+        new_wksht = Worksheet_field(wksht_name = wksht_form.worksheet.data)
+        db.session.add(new_wksht)
+        db.session.commit()
+        return redirect(url_for('custom_select'))
+"""
