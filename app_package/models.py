@@ -19,6 +19,14 @@ class Preset_Field(db.Model):
     def __repre__(self):
         return f"Preset_field('{self.preset_name}', '{self.preset_src}')"
 
+class Year_Field(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    year = db.Column(db.Integer, nullable = False)
+    
+class State_Field(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    state = db.Column(db.String(2), nullable = False)
+
 """
 class Worksheet_field(db.Model):
     id = db.Column(db.Integer, primary_key = True)

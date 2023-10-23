@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div id="custom-filter">
+    <form action="" method="post">
+        {{fac_filter_form.hidden_tag()}}
+        <fieldset>
+            <div>
+                {{fac_filter_form.year_field.label}}
+                {{fac_filter_form.year_field(id="fac_filter")}}
+            </div>
+            <div>
+                {{fac_filter_form.submit}}
+            </div>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}
