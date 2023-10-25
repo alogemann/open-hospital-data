@@ -47,7 +47,7 @@ class FacInfoForm(FlaskForm):
     submit = SubmitField('Next')
 
 class FacFilterForm(FlaskForm):
-    years = [(i,i) for i in range(2012,2021)]
+    years = [(i,i) for i in range(2012,2022)]
     year_field = MultiCheckboxField('Year', choices=years)
     submit = SubmitField('Submit')
 
