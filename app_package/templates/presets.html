@@ -3,14 +3,14 @@
 <div id="custom-presets">
     <h3>Step 1: Add Commonly used variables to dataset</h3>
     <form action="" method="post">
-        {{fac_info_form.hidden_tag()}}
+        {{preset_form.hidden_tag()}}
         <fieldset>
             <div>
-                {{fac_info_form.facility_info.label}}
-                {{fac_info_form.facility_info(id="fac_info")}}
+                {{preset_form.facility_info.label}}
+                {{preset_form.facility_info(id="fac_info")}}
             </div>
             <div>
-                {{fac_info_form.submit}}
+                {{preset_form.submit}}
             </div>
         </fieldset>
     </form>

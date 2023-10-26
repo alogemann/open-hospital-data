@@ -1,10 +1,20 @@
 import pandas as pd
 from flask import render_template, redirect, send_file, url_for, request
-from sqlalchemy import text
+from sqlalchemy import text, select
 from app_package import app, db
-from app_package.forms import ClearForm, FieldsForm, CreateForm, DownloadForm, FacInfoForm, FacFilterForm
-from app_package.models import Report_field, Preset_Field, Year_Field
+from app_package.forms import ClearForm, FieldsForm, CreateForm, DownloadForm, PresetInfoForm, FacFilterForm
+from app_package.models import Report_field, Preset_Field, Year_Field, Fac_Info_Field
 from app_package.helpers import format_field
+
+@app.route('/f/<string:id>')
+def facility(id):
+    stmt = select(Fac_Info_Field).where(Fac_Info_Field.prvdr_ccn == id)
+    result = db.session.execute(stmt)
+    facility = result.all()[0][0]
+    print(facility)
+    return render_template('facility.html',facility=facility)
+
+
 
 @app.get('/')
 @app.get('/index')
@@ -14,13 +24,13 @@ def index():
 @app.route('/presets',methods=['GET','POST'])
 def presets():
 
-    fac_info_form = FacInfoForm()
+    preset_form = PresetInfoForm()
 
     if request.method=='GET':
-        return render_template('presets.html', fac_info_form=fac_info_form)
+        return render_template('presets.html', preset_form=preset_form)
 
-    elif fac_info_form.validate_on_submit():
-        for i in fac_info_form.data['facility_info']:
+    elif preset_form.validate_on_submit():
+        for i in preset_form.data['facility_info']:
             new_preset = Preset_Field(preset_name = i,
                                       preset_src = 'fac_info')
             db.session.add(new_preset)

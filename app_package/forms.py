@@ -40,7 +40,7 @@ class MultiCheckboxField(SelectMultipleField):
     widget = widgets.ListWidget(prefix_label=False)
     option_widget = widgets.CheckboxInput()
 
-class FacInfoForm(FlaskForm):
+class PresetInfoForm(FlaskForm):
     facility_info = MultiCheckboxField('Facility Information', choices=fac_info_choices)
     utilization = MultiCheckboxField('Utilization', choices = utilization_choices)
     finance = MultiCheckboxField('Financial', choices = finance_choices)
