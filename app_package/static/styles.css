@@ -7,8 +7,13 @@ body {
     padding: 10px;
 }
 
+.card {
+    width: 25rem;
+}
+
 .form-content {
     font-size: 15px;
+    width: 100px;
 }
 
 .form-label {
@@ -17,17 +22,25 @@ body {
 
 .var-field {
     margin: 5px;
+    display: inline-block;
+}
+
+.var-content {
+    margin: 5px;
+    width: 200px;
 }
 
 .form-field {
-    display: inline-block;
     margin: 5px;
+    display: inline-block;
 }
 
 .var-container {
+    border-radius: 5px;
     border: 1px black dashed;
-    margin: 10px;
+    margin-top: 10px;
     padding: 5px;
+    background-color: white;
 }
 
 .var-field {
@@ -37,6 +50,12 @@ body {
 
 .end-form {
     display: inline-block;
+}
+
+.preset-form {
+    margin: 5px;
+    padding: 10px;
+    padding-left: 15px;
 }
 
 #fac_info {

@@ -1,16 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-<div id="custom-presets">
-    <h3>Step 1: Add Commonly used variables to dataset</h3>
+<div class="container">
+    <h3>Select Variables</h3>
     <form action="" method="post">
         {{preset_form.hidden_tag()}}
         <fieldset>
-            <div>
-                {{preset_form.facility_info.label}}
-                {{preset_form.facility_info(id="fac_info")}}
+            <div class="row justify-content-start">
+                <div class="col-4 bg-body-tertiary border preset-form">
+                    {{preset_form.facility_info.label()}}
+                    {{preset_form.facility_info(id="fac_info")}}
+                </div>
+                <div class="col-4 bg-body-tertiary border preset-form">
+                    {{preset_form.finance.label()}}
+                    {{preset_form.finance(id="fac_info")}}
+                </div>
             </div>
-            <div>
-                {{preset_form.submit}}
+            <div class="row">
+                <div class="col-4 align-self-start preset-form">
+                    {{preset_form.submit(class="btn btn-primary")}}
+                </div>
             </div>
         </fieldset>
     </form>

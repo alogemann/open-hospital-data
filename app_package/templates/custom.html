@@ -1,15 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-<div id="custom-select">
-    <h3>Step 2: Add custom variables to dataset</h3>
-    <p>Select worksheet, column, and line number to add variable to dataset</p>
-    <div class="form-container">
+    <div class="container bg-body-tertiary border">
+        <h3>Add Custom Variables</h3>
+        <p>Add variable name and select worksheet, column, and line to add custom variable</p>
         <form action="" method="post"   >
             {{fields_form.hidden_tag()}}
             <fieldset>
                 <div class='var-field'>
                     {{fields_form.var_name.label(class="form-label")}}
-                    {{fields_form.var_name(class="form-content")}}
+                    {{fields_form.var_name(class="var-content")}}
                 </div>
                 <div class='form-field'>
                     {{fields_form.worksheet.label(class="form-label")}}
@@ -24,30 +23,46 @@
                     {{fields_form.column_number(class="form-content")}}
                 </div>
                 <div>
-                    {{fields_form.submit(class="form-content")}}
+                    {{fields_form.submit(class="btn btn-primary btn-sm")}}
                 </div>
             </fieldset>
         </form>
     </div>
-    <div class='var-container'>
-        <p class="var-field">Data Cart:</p>
-        {% for var in all_fields %}
-        <p class='var-field'>
-            [Variable: {{var.var_name}}],[Worksheet: '{{var.wksht_cd}}'],[Line Number: '{{var.line_num}}'],[Column Number: '{{var.clmn_num}}']
-        </p>
-        {% endfor %}
+    <div class="container bg-body-tertiary border">
+        <table class="table table-hover">
+            <h3>Data Cart</h3>
+            <thead>
+            <tr>
+                <th scope="col">Variable Name</th>
+                <th scope="col">Worksheet</th>
+                <th scope="col">Line</th>
+                <th scope="col">Column</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for var in all_fields %}
+                    <tr>
+                        <td>{{var.var_name}}</td>
+                        <td>{{var.wksht_cd}}</td>
+                        <td>{{var.line_num}}</td>
+                        <td>{{var.clmn_num}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <form action="" method="post" class="end-form">
+            {{clear_form.hidden_tag()}}
+            <div class="form-field">
+                {{clear_form.clear(class="btn btn-primary btn-sm")}}
+            </div>
+        </form>
     </div>
-    <form action="" method="post" class="end-form">
-        {{clear_form.hidden_tag()}}
-        <div class="form-field">
-            {{clear_form.clear(class="form-content")}}
-        </div>
-    </form>
+    <div class="container form-field">
     <form action="" method="post" class="end-form">
         {{create_form.hidden_tag()}}
         <div class = form-field>
-            {{create_form.create(class="form-content")}}
+            {{create_form.create(class="btn btn-primary")}}
         </div>
     </form>
-</div>
+    </div>
 {% endblock %}

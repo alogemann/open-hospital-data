@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-    <h2>Access data for hospitals and health facilities from CMS Cost Reports</h2>
-    <h3>General Information</h3>    
-    <p>CMS cost reports contains health provider information such as facility characteristics, utilization data, 
-        cost and charges by cost center (in total and for Medicare), Medicare settlement data, and financial statement data. 
-    </p>
-    <h3>
-        <a href="/presets">Build custom cost report dataset</a>
-    </h3>
+
+<div class="container p-5 mb-4 bg-body-tertiary border">
+    <div class="container-fluid py-5">
+      <h1 class="display-5 fw-bold">Custom Cost Report Data</h1>
+      <p class="col-md-8 fs-4">Create custom datasets from CMS cost reports. Cost Reports contain health provider information such as facility characteristics, utilization, and financial statement data. </p>
+      <a class="btn btn-primary" href="/presets" role="button">Build Dataset</a>
+
+    </div>
+  </div>
 {% endblock %}

@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-
-<h2>Name: {{ facility.prvdr_name }}</h2>
-<h3>Address: {{facility.prvdr_addr}}</h3>
-<h3>City: {{facility.prvdr_city}}</h3>
-<h3>State: {{facility.prvdr_state}}</h3>
-<h3>Chain: {{facility.chain_name}}</h3>
-
+<div class="container">
+    <h3>Facility Profile</h3>
+    <div class="card bg-body-tertiary rounded-0">
+        <div class="card-body">
+            <h5>Name: {{ facility.prvdr_name }}</h5>
+            <h6>Address: {{facility.prvdr_addr}}</h6>
+            <h6>City: {{facility.prvdr_city}}</h6>
+            <h6>State: {{facility.prvdr_state}}</h6>
+            <h6>Chain: {{facility.chain_name}}</h6>
+        </div>
+    </div>
+</div>
 {% endblock %}

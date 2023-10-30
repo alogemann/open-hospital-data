@@ -1,6 +1,6 @@
 import pandas as pd
 from flask import render_template, redirect, send_file, url_for, request
-from sqlalchemy import text, select
+from sqlalchemy import text, select, desc
 from app_package import app, db
 from app_package.forms import ClearForm, FieldsForm, CreateForm, DownloadForm, PresetInfoForm, FacFilterForm
 from app_package.models import Report_field, Preset_Field, Year_Field, Fac_Info_Field
@@ -8,13 +8,11 @@ from app_package.helpers import format_field
 
 @app.route('/f/<string:id>')
 def facility(id):
-    stmt = select(Fac_Info_Field).where(Fac_Info_Field.prvdr_ccn == id)
-    result = db.session.execute(stmt)
-    facility = result.all()[0][0]
-    print(facility)
+    stmt = select(Fac_Info_Field) \
+            .where(Fac_Info_Field.prvdr_ccn == id) \
+            .order_by(desc(Fac_Info_Field.rpt_year))
+    facility = db.session.scalars(stmt).first()
     return render_template('facility.html',facility=facility)
-
-
 
 @app.get('/')
 @app.get('/index')

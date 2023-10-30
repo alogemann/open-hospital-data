@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="container bg-body-tertiary border">
     <h2>Click below to download dataset</h2>
     <div>
         <form action="" method="post">
             {{download_form.hidden_tag()}}
             <div class="form-field">
-                {{download_form.download}}
+                {{download_form.download(class="btn btn-primary")}}
             </div>
         </form>
     </div>
+</div>
 {% endblock %}

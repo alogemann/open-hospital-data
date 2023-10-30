@@ -12,11 +12,12 @@ wksht_codes = [('A000000','A'),('A10000','A-1'),('A200000','A-2'),('A30000A','A-
 
 fac_info_choices = [('prvdr_ccn','Medicare ID'),('prvdr_name','Facility Name'),('prvdr_addr','Address'),
                     ('prvdr_city','City'),('prvdr_county','County'),('prvdr_zip','Zip Code'),('prvdr_state','State'),
-                    ('prvdr_cbsa','CBSA'),('type_control','Non/For-Profit'),('chain_org','Chain (Y/N)'),
-                    ('chain_name','Dialysis Chain')]
+                    ('prvdr_cbsa','CBSA'),('type_control','Non/For-Profit'),('chain_name','Dialysis Chain')]
 
 utilization_choices = []
-finance_choices = []
+finance_choices = [('net_pt_rev','Net Patient Revenue'),('tot_op_exp','Operating Expenses'),
+                   ('net_inc_pt_svcs','Net Income Patient Services'),('covid_inc','Covid-19 Income'),
+                   ('tot_oth_inc','Total Other Income'),('tot_net_inc','Net Income')]
 
 #forms for custom data
 class FieldsForm(FlaskForm):
@@ -30,7 +31,7 @@ class ClearForm(FlaskForm):
     clear = SubmitField('Clear Selection', validators=[DataRequired()])
 
 class CreateForm(FlaskForm):
-    create = SubmitField('Create Dataset', validators=[DataRequired()])
+    create = SubmitField('Next', validators=[DataRequired()])
 
 class DownloadForm(FlaskForm):
     download = SubmitField('Download Dataset', validators=[DataRequired()])
@@ -42,14 +43,14 @@ class MultiCheckboxField(SelectMultipleField):
 
 class PresetInfoForm(FlaskForm):
     facility_info = MultiCheckboxField('Facility Information', choices=fac_info_choices)
-    utilization = MultiCheckboxField('Utilization', choices = utilization_choices)
-    finance = MultiCheckboxField('Financial', choices = finance_choices)
+    utilization = MultiCheckboxField('Utilization Data', choices = utilization_choices)
+    finance = MultiCheckboxField('Financial Statement', choices = finance_choices)
     submit = SubmitField('Next')
 
 class FacFilterForm(FlaskForm):
     years = [(i,i) for i in range(2012,2022)]
     year_field = MultiCheckboxField('Year', choices=years)
-    submit = SubmitField('Submit')
+    submit = SubmitField('Create Dataset')
 
 """
 class WorksheetForm(FlaskForm):

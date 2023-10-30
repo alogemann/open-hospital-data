@@ -34,9 +34,10 @@ class Fac_Info_Field(db.Model):
     prvdr_cbsa = db.Column(db.String(40))
     type_control = db.Column(db.String(40))
     chain_name = db.Column(db.String(40))
+    rpt_year = db.Column(db.Integer)
 
     def __repr__(self):
-        return f"Fac_info_field('{self.prvdr_ccn.strip()}','{self.prvdr_name.strip()}')"
+        return f"Fac_info_field('{self.prvdr_ccn.strip()}','{self.prvdr_name.strip()}','{self.rpt_year}')"
 
 class Year_Field(db.Model):
     id = db.Column(db.Integer, primary_key=True)
