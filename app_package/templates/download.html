@@ -1,14 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container bg-body-tertiary border">
+<div class="container bg-body-secondary border border-dark">
     <h2>Click below to download dataset</h2>
     <div>
         <form action="" method="post">
             {{download_form.hidden_tag()}}
             <div class="form-field">
-                {{download_form.download(class="btn btn-primary")}}
+                {{download_form.download(class="btn btn-secondary")}}
             </div>
         </form>
     </div>
+</div>
+<div class="container bg-body-secondary border border-dark" id="download-foot">
+    <a class="btn btn-secondary" href="{{url_for('filter')}}" role="button">Back</a>
 </div>
 {% endblock %}

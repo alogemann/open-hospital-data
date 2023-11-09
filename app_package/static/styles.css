@@ -7,17 +7,14 @@ body {
     padding: 10px;
 }
 
-.card {
-    width: 25rem;
-}
-
 .form-content {
     font-size: 15px;
     width: 100px;
 }
 
 .form-label {
-    font-size: 15px;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .var-field {
@@ -58,10 +55,40 @@ body {
     padding-left: 15px;
 }
 
+#preset-foot {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 25px;
+    width: 50%;
+
+}
+#nav-foot {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+    width: 50%;
+}
+#download-foot {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 25px;
+    width: 50%;
+}
+
 #fac_info {
     list-style-type: none;
 }
 
-#fac_filter {
+.fac_filter {
     list-style-type: none;
+}
+
+#state_filter {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.fac_filter li {
+    margin: 3px;
+    width: 75px;
 }

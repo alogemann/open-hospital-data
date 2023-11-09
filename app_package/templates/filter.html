@@ -1,20 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container" id="custom-filter">
-    <h3>Specify facilities to include</h3>
+    <h3>Specify Dataset Criteria</h3>
     <form action="" method="post">
         {{fac_filter_form.hidden_tag()}}
         <fieldset>
             <div class="row justify-content-start">
-                <div class="col-4 bg-body-tertiary border preset-form">
+                <div class="col-3 bg-body-secondary border border-dark preset-form">
                     {{fac_filter_form.year_field.label}}
-                    {{fac_filter_form.year_field(id="fac_filter")}}
+                    {{fac_filter_form.year_field(class="fac_filter")}}
+                </div>
+                <div class="col-4 bg-body-secondary border border-dark preset-form">
+                    {{fac_filter_form.state_field.label}}
+                    {{fac_filter_form.state_field(class="fac_filter", id="state_filter")}}
                 </div>
             </div>
             <div class="preset-form">
-                {{fac_filter_form.submit(class="btn btn-primary")}}
+                {{fac_filter_form.submit(class="btn btn-secondary")}}
             </div>
         </fieldset>
     </form>
+</div>
+<div class="container bg-body-secondary border border-dark " id="nav-foot">
+    <a class="btn btn-secondary" href="{{url_for('custom')}}" role="button">Back</a>
+    <a class="btn btn-secondary" href="{{url_for('download')}}" role="button">Next</a>
 </div>
 {% endblock %}

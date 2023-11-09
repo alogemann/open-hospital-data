@@ -16,3 +16,6 @@ keys.py
 
 #sqlite db in devlopment
 cost_reports.db
+
+#to do list
+to_do.txt

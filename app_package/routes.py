@@ -2,18 +2,11 @@ import pandas as pd
 from flask import render_template, redirect, send_file, url_for, request
 from sqlalchemy import text, select, desc
 from app_package import app, db
-from app_package.forms import ClearForm, FieldsForm, CreateForm, DownloadForm, PresetInfoForm, FacFilterForm
-from app_package.models import Report_field, Preset_Field, Year_Field, Fac_Info_Field
+from app_package.forms import ClearForm, FieldsForm, DownloadForm, PresetInfoForm, FacFilterForm
+from app_package.models import Report_field, Field_presets, Year_Field, Fac_Info_Field, State_Field
 from app_package.helpers import format_field
 
-@app.route('/f/<string:id>')
-def facility(id):
-    stmt = select(Fac_Info_Field) \
-            .where(Fac_Info_Field.prvdr_ccn == id) \
-            .order_by(desc(Fac_Info_Field.rpt_year))
-    facility = db.session.scalars(stmt).first()
-    return render_template('facility.html',facility=facility)
-
+#home route
 @app.get('/')
 @app.get('/index')
 def index():
@@ -23,17 +16,47 @@ def index():
 def presets():
 
     preset_form = PresetInfoForm()
+    clear_form = ClearForm()
+    all_fields = Report_field.query.all()
 
+    #get requests
     if request.method=='GET':
-        return render_template('presets.html', preset_form=preset_form)
+        return render_template('presets.html'
+                               ,preset_form=preset_form
+                               ,clear_form=clear_form
+                               ,all_fields=all_fields)
 
+    #post requests
+    
+    elif clear_form.validate_on_submit():
+        delete_fields = Report_field.__table__.delete()
+        db.session.execute(delete_fields)
+        db.session.commit()
+        print('clear form route')
+        return redirect(url_for('presets'))
+    
     elif preset_form.validate_on_submit():
         for i in preset_form.data['facility_info']:
-            new_preset = Preset_Field(preset_name = i,
-                                      preset_src = 'fac_info')
-            db.session.add(new_preset)
+            stmt = select(Field_presets).where(Field_presets.var_name == i)
+            field = db.session.scalars(stmt).first()
+            new_field = Report_field(var_name = field.var_name
+                                     ,wksht_cd = field.wksht_cd
+                                     ,line_num = field.line_num
+                                     ,clmn_num = field.clmn_num)
+            db.session.add(new_field)
             db.session.commit()
-        return(redirect(url_for('custom')))
+
+        for i in preset_form.data['finance']:
+            stmt = select(Field_presets).where(Field_presets.var_name == i)
+            field = db.session.scalars(stmt).first()
+            new_field = Report_field(var_name = field.var_name
+                                     ,wksht_cd = field.wksht_cd
+                                     ,line_num = field.line_num
+                                     ,clmn_num = field.clmn_num)
+            db.session.add(new_field)
+            db.session.commit()
+        print('preset form route')
+        return(redirect(url_for('presets')))
     else:
         return '<h1>ERROR</h1>'
 
@@ -42,8 +65,6 @@ def custom():
 
     fields_form = FieldsForm()
     clear_form = ClearForm()
-    create_form = CreateForm()
-
     all_fields = Report_field.query.all()
 
     ##Get Request
@@ -51,7 +72,6 @@ def custom():
         return render_template('custom.html',
                                fields_form = fields_form,
                                clear_form = clear_form,
-                               create_form = create_form,
                                all_fields = all_fields)
 
     ##Post Requests
@@ -70,14 +90,12 @@ def custom():
         db.session.commit()
         return redirect(url_for('custom'))
     
-    elif create_form.validate_on_submit():
-        return redirect(url_for('filter'))
-    
     else:
         return '<h1>ERROR</h1>'
 
 @app.route('/filter',methods=['GET','POST'])
 def filter():
+
     fac_filter_form = FacFilterForm()
 
     if request.method == 'GET':
@@ -87,7 +105,11 @@ def filter():
             year_field = Year_Field(year = i)
             db.session.add(year_field)
             db.session.commit()
-        return redirect(url_for('download'))
+        for i in fac_filter_form.data['state_field']:
+            state_field = State_Field(state = i)
+            db.session.add(state_field)
+            db.session.commit()
+        return redirect(url_for('filter'))
     else:
         return '<h1>ERROR</h1>'
 
@@ -102,24 +124,30 @@ def download():
     elif download_form.validate_on_submit():
         db.session.execute(text('CALL build_variables();'))
         db.session.commit()
-        db.session.execute(text('CALL add_presets()'))
-        db.session.commit()
         db.session.execute(text('CALL build_table();'))
         db.session.commit()
         db.session.execute(text('CALL year_filter();'))
+        db.session.commit()
         new_df = pd.DataFrame(db.session.execute(text('Select * from final_table')))
         new_df.to_csv('app_package/static/custom.csv',index=False)
         db.session.execute(text('CALL delete_tables();'))
         delete_reports = Report_field.__table__.delete()
         delete_years = Year_Field.__table__.delete()
-        delete_presets = Preset_Field.__table__.delete()
         db.session.execute(delete_reports)
         db.session.execute(delete_years)
-        db.session.execute(delete_presets)
         db.session.commit()
         return send_file('static/custom.csv',as_attachment=True)
     else:
         return '<h1>ERROR</h1>'
+
+
+@app.route('/f/<string:id>')
+def facility(id):
+    stmt = select(Fac_Info_Field) \
+            .where(Fac_Info_Field.prvdr_ccn == id) \
+            .order_by(desc(Fac_Info_Field.rpt_year))
+    facility = db.session.scalars(stmt).first()
+    return render_template('facility.html',facility=facility)
 
 """
 @app.route('/custom_select', methods=['GET','POST'])
