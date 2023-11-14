@@ -7,18 +7,65 @@
         <fieldset>
             <div class="row justify-content-start">
                 <div class="col-3 bg-body-secondary border border-dark preset-form">
-                    {{fac_filter_form.year_field.label}}
+                    {{fac_filter_form.year_field.label(class="form-label")}}
                     {{fac_filter_form.year_field(class="fac_filter")}}
                 </div>
                 <div class="col-4 bg-body-secondary border border-dark preset-form">
-                    {{fac_filter_form.state_field.label}}
+                    {{fac_filter_form.state_field.label(class="form-label")}}
                     {{fac_filter_form.state_field(class="fac_filter", id="state_filter")}}
+                </div>
+                <div class="col-4 bg-body-secondary border border-dark preset-form">
+                    {{fac_filter_form.chain_field.label(class="form-label")}}
+                    {{fac_filter_form.chain_field(class="fac_filter")}}
                 </div>
             </div>
             <div class="preset-form">
                 {{fac_filter_form.submit(class="btn btn-secondary")}}
             </div>
         </fieldset>
+    </form>
+</div>
+<div class="container bg-body-secondary border border-dark">
+    <table class="table table-hover table-striped border">
+        <h3>Criteria Selection</h3>
+        <thead>
+        <tr>
+            <th scope="col">Filter</th>
+            <th scope="col">Criteria</th>
+        </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td>Years</td>
+                    <td>
+                        {% for year in years%}
+                            {{year}},
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>States</td>
+                    <td>
+                        {% for state in states%}
+                            {{state}},
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Chains</td>
+                    <td>
+                        {% for chain in chains%}
+                            {{chain}},
+                        {% endfor %}
+                    </td>
+                </tr>
+        </tbody>
+    </table>
+    <form action="" method="post" class="end-form">
+        {{clear_form.hidden_tag()}}
+        <div class="form-field">
+            {{clear_form.clear(class="btn btn-secondary")}}
+        </div>
     </form>
 </div>
 <div class="container bg-body-secondary border border-dark " id="nav-foot">

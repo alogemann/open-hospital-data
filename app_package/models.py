@@ -1,6 +1,7 @@
 from app_package import db
 
 class Report_field(db.Model):
+
     id = db.Column(db.Integer, primary_key = True)
     var_name = db.Column(db.String(40), nullable = False)
     wksht_cd = db.Column(db.String(7), nullable = False)
@@ -50,6 +51,10 @@ class Year_Field(db.Model):
 class State_Field(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     state = db.Column(db.String(2), nullable = False)
+
+class Chain_Field(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    chain = db.Column(db.String(40), nullable = False)
 
 """
 class Worksheet_field(db.Model):

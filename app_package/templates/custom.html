@@ -29,7 +29,7 @@
     </form>
 </div>
 <div class="container bg-body-secondary border border-dark">
-    <table class="table table-hover">
+    <table class="table table-hover table-striped border">
         <h3>Data Cart</h3>
         <thead>
         <tr>
@@ -37,6 +37,7 @@
             <th scope="col">Worksheet</th>
             <th scope="col">Line</th>
             <th scope="col">Column</th>
+            <th scope="col" style="width: 5%;">Remove</th>
         </tr>
         </thead>
         <tbody>
@@ -46,6 +47,7 @@
                     <td>{{var.wksht_cd}}</td>
                     <td>{{var.line_num}}</td>
                     <td>{{var.clmn_num}}</td>
+                    <td class="text-center" style="width: 5%;"><button class="btn btn-secondary btn-sm">X</button></td>
                 </tr>
             {% endfor %}
         </tbody>

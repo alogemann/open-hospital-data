@@ -14,7 +14,17 @@ fac_info_choices = [('medicare_id','Medicare ID'),('facility_name','Facility Nam
                     ('city','City'),('county','County'),('zip_code','Zip Code'),('state','State'),
                     ('non_for_profit','Non/For-Profit'),('dialysis_chain','Dialysis Chain')]
 
-utilization_choices = []
+utilization_choices = [('hemodialysis_treatments','Hemodialysis Treatments'),('peritoneal_treatments','Peritoneal Treatments'),
+                       ('home_hemo_treatments','Home Hemodialysis Treatments'),('home_peritoneal_treatment','Home Peritoneal Treatments'),
+                       ('total_treatments','Total Treatments'),('hemodialysis_patients','Hemodialysis Patients'),
+                       ('peritoneal_patients','Peritoneal Patients'),('home_dialysis_patients','Home Dialysis Patients'),
+                       ('transplant_received','Transplants Recieved'),('transplant_waitlist','Patients on Transplant Waitlist')]
+
+staff_choices = [('physicians','Physicians'),('registered_nurses','Registered Nurses'),
+                 ('licensed_practical_nurses','Licensed Practical Nurses'),('nurses_aides','Nurses Aides'),
+                 ('technicians','Technicians'),('social_workers','Social Workers'),('dieticians','Dieticians'),
+                 ('administrative','Administrative'),('management','Management'),('other','Other')]
+
 finance_choices = [('net_patient_revenue','Net Patient Revenue'),('operating_expenses','Operating Expenses'),
                    ('net_income_patient_services','Net Income Patient Services'),('covid_19_income','Covid-19 Income'),
                    ('other_income','Other Income'),('net_income','Net Income')]
@@ -24,6 +34,13 @@ state_choices = ['AK','AL', 'AR','AS','AZ','CA','CO','CT','DC','DE','FL','GA','G
                  ,'NJ','NM','NV','NY','OH','OK','OR','PA','PR','RI','SC','SD','TN','TX','UT','VA','VI'
                  ,'VT','WA','WI','WV','WY']
 
+chain_choices = [('DAVITA INC','DaVita Inc'),('FRESENIUS MEDICAL CARE  N.A.','Fresenius Medical Care'),
+                 ('U.S. RENAL CARE INC.','US Renal Care'),('DIALYSIS CLINIC  INC.','Dialysis Clinic Inc'),
+                 ('AMERICAN RENAL ASSOCIATES  INC.','American Renal Associates Inc'),('SATELLITE HEALTHCARE  INC.','Satellite Healthcare Inc'),
+                 ('UNIVERSITY OF UTAH','University of Utah'),('CENTERS FOR DIALYSIS CARE','Centers for Dialysis Care'),
+                 ('NORTHWEST KIDNEY CENTERS','Northwest Kidney Centers'),('WAKE FOREST UNIVERSITY','Wake Forest University'),
+                 ('DIALYZE HOLDINGS  LLC','Dialyze Holdings LLC'),('PURE LIFE RENAL  INC.','Pure Life Renal Inc'),
+                 ('GREENFIELD HEALTH SYSTEMS','Greenfield Health Systems'),('CA DIALYSIS MANAGEMENT SVCS  INC','CA Dialysis Management Services Inc')]
 #forms for custom data
 class FieldsForm(FlaskForm):
     worksheet = SelectField('Worksheet Code',choices = wksht_codes, validators=[DataRequired()])
@@ -33,7 +50,7 @@ class FieldsForm(FlaskForm):
     submit = SubmitField('Add to Cart')
  
 class ClearForm(FlaskForm):
-    clear = SubmitField('Clear Selection', validators=[DataRequired()])
+    clear = SubmitField('Clear All', validators=[DataRequired()])
 
 class DownloadForm(FlaskForm):
     download = SubmitField('Download Dataset', validators=[DataRequired()])
@@ -47,6 +64,7 @@ class PresetInfoForm(FlaskForm):
     facility_info = MultiCheckboxField('Facility Information', choices=fac_info_choices)
     utilization = MultiCheckboxField('Utilization Data', choices = utilization_choices)
     finance = MultiCheckboxField('Financial Statement', choices = finance_choices)
+    staff = MultiCheckboxField('Staff', choices=staff_choices)
     submit = SubmitField('Add Variables')
 
 class FacFilterForm(FlaskForm):
@@ -54,7 +72,8 @@ class FacFilterForm(FlaskForm):
     year_field = MultiCheckboxField('Year', choices=years)
     states = [(i,i) for i in state_choices]
     state_field = MultiCheckboxField('State/Territory', choices=states)
-    submit = SubmitField('Add Filters')
+    chain_field = MultiCheckboxField('Dialysis Chain', choices=chain_choices)
+    submit = SubmitField('Add Criteria')
 
 """
 class WorksheetForm(FlaskForm):
