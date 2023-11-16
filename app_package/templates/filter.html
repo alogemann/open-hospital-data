@@ -1,33 +1,55 @@
-{% extends "base.html" %}
+{% extends "sidebar_base.html" %}
 {% block content %}
 <div class="container" id="custom-filter">
-    <h3>Specify Dataset Criteria</h3>
+    <div class="row">
+        <div class="col bg-body-secondary mt-4 p-2 border border-dark">
+            <h4>Specify Dataset Criteria</h4>
+        </div>
+    </div>
     <form action="" method="post">
         {{fac_filter_form.hidden_tag()}}
         <fieldset>
-            <div class="row justify-content-start">
-                <div class="col-3 bg-body-secondary border border-dark preset-form">
-                    {{fac_filter_form.year_field.label(class="form-label")}}
-                    {{fac_filter_form.year_field(class="fac_filter")}}
-                </div>
-                <div class="col-4 bg-body-secondary border border-dark preset-form">
-                    {{fac_filter_form.state_field.label(class="form-label")}}
-                    {{fac_filter_form.state_field(class="fac_filter", id="state_filter")}}
-                </div>
-                <div class="col-4 bg-body-secondary border border-dark preset-form">
-                    {{fac_filter_form.chain_field.label(class="form-label")}}
-                    {{fac_filter_form.chain_field(class="fac_filter")}}
-                </div>
-            </div>
-            <div class="preset-form">
-                {{fac_filter_form.submit(class="btn btn-secondary")}}
-            </div>
+            <div class="row mt-2 bg-body-secondary border border-dark">
+                <div class="col bg-body-secondary ps-4 p-2">    
+                    <button class="p-2 btn btn-toggle rounded" type="button" data-bs-toggle="collapse" data-bs-target="#filter-year" aria-expanded="true" aria-controls="fac-info">
+                        Year
+                    </button>           
+                    <div class="collapse show" id="filter-year">
+                        {{fac_filter_form.year_field(class="list")}}
+                        {{fac_filter_form.submit(class="btn btn-toggle p-2")}}
+                    </div>
+                </div>  
+            </div> 
+            <div class="row mt-2 bg-body-secondary border border-dark">
+                <div class="col bg-body-secondary ps-4 p-2">    
+                    <button class="p-2 btn btn-toggle rounded" type="button" data-bs-toggle="collapse" data-bs-target="#filter-state" aria-expanded="false" aria-controls="fac-info">
+                        State
+                    </button>           
+                    <div class="collapse" id="filter-state">
+                        {{fac_filter_form.state_field(class="list", id="state_filter")}}
+                        {{fac_filter_form.submit(class="btn btn-toggle p-2")}}
+                    </div>
+                </div>  
+            </div> 
+            <div class="row mt-2 bg-body-secondary border border-dark">
+                <div class="col bg-body-secondary ps-4 p-2">    
+                    <button class="p-2 btn btn-toggle rounded" type="button" data-bs-toggle="collapse" data-bs-target="#filter-chain" aria-expanded="false" aria-controls="fac-info">
+                        Chain
+                    </button>           
+                    <div class="collapse" id="filter-chain">
+                        {{fac_filter_form.chain_field(class="list")}}
+                        {{fac_filter_form.submit(class="btn btn-toggle p-2")}}
+                    </div>
+                </div>  
+            </div> 
         </fieldset>
     </form>
 </div>
-<div class="container bg-body-secondary border border-dark">
-    <table class="table table-hover table-striped border">
+<div class="container bg-body-secondary border border-dark mt-4">
+    <div class="p-2">
         <h3>Criteria Selection</h3>
+    </div>
+    <table class="table table-hover table-striped border">
         <thead>
         <tr>
             <th scope="col">Filter</th>
@@ -35,6 +57,7 @@
         </tr>
         </thead>
         <tbody>
+            {% if year_flag %}
                 <tr>
                     <td>Years</td>
                     <td>
@@ -43,6 +66,8 @@
                         {% endfor %}
                     </td>
                 </tr>
+            {% endif %}
+            {% if state_flag %}
                 <tr>
                     <td>States</td>
                     <td>
@@ -51,6 +76,8 @@
                         {% endfor %}
                     </td>
                 </tr>
+            {% endif %}
+            {% if chain_flag %}
                 <tr>
                     <td>Chains</td>
                     <td>
@@ -59,17 +86,18 @@
                         {% endfor %}
                     </td>
                 </tr>
+            {% endif %}
         </tbody>
     </table>
     <form action="" method="post" class="end-form">
         {{clear_form.hidden_tag()}}
-        <div class="form-field">
-            {{clear_form.clear(class="btn btn-secondary")}}
+        <div class="p-2">
+            {{clear_form.clear(class="btn")}}
         </div>
     </form>
 </div>
-<div class="container bg-body-secondary border border-dark " id="nav-foot">
-    <a class="btn btn-secondary" href="{{url_for('custom')}}" role="button">Back</a>
-    <a class="btn btn-secondary" href="{{url_for('download')}}" role="button">Next</a>
+<div class="container d-flex justify-content-between bg-body-secondary border border-dark p-2 mb-4" id="preset-foot">
+    <a class="btn" href="{{url_for('custom')}}" role="button">< Back</a>
+    <a class="btn" href="{{url_for('download')}}" role="button">Next ></a>
 </div>
 {% endblock %}

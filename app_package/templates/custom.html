@@ -1,36 +1,60 @@
-{% extends "base.html" %}
+{% extends "sidebar_base.html" %}
 {% block content %}
-<div class="container bg-body-secondary border border-dark">
-    <h3>Add Custom Variables</h3>
-    <p>Add variable name and select worksheet, column, and line to add custom variable</p>
+<div class="container bg-body-secondary border border-dark mt-4 p-3">
+    <div class="row">
+        <div class="col">
+            <h4>Add Custom Variables</h4>
+            <p>Add variable name and select worksheet, column, and line to add custom variable</p>
+        </div>
+    </div>
     <form action="" method="post"   >
         {{fields_form.hidden_tag()}}
         <fieldset>
-            <div class='var-field'>
-                {{fields_form.var_name.label(class="form-label")}}
-                {{fields_form.var_name(class="var-content")}}
+            <div class="row mt-3">
+                <div class="col-2 mt-2 mb-3 form-label">
+                    {{fields_form.var_name.label()}}
+                </div>
+                <div class="col-5">
+                    {{fields_form.var_name(class="form-control")}}
+                </div>
             </div>
-            <div class='form-field'>
-                {{fields_form.worksheet.label(class="form-label")}}
-                {{fields_form.worksheet(class="form-content")}}
+            <div class="row">
+            <div class="col-3 mt-2 mb-3 form-label">
+                {{fields_form.worksheet.label()}}
             </div>
-            <div class='form-field'>
-                {{fields_form.line_number.label(class="form-label")}}
-                {{fields_form.line_number(class="form-content")}}
+            <div class="col-4">
+                {{fields_form.worksheet(class="form-select")}}
             </div>
-            <div class='form-field'>
-                {{fields_form.column_number.label(class="form-label")}}
-                {{fields_form.column_number(class="form-content")}}
             </div>
-            <div>
-                {{fields_form.submit(class="btn btn-secondary")}}
+            <div class="row">
+                <div class="col-3 mt-2 mb-3 form-label">
+                    {{fields_form.line_number.label()}}
+                </div>
+                <div class="col-4">
+                    {{fields_form.line_number(class="form-control")}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3 mt-2 mb-3 form-label">
+                    {{fields_form.column_number.label()}}
+                </div>
+                <div class="col-4">
+                    {{fields_form.column_number(class="form-control")}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mt-2 mb-2">
+                {{fields_form.submit(class="btn")}}
+                </div>
             </div>
         </fieldset>
     </form>
 </div>
-<div class="container bg-body-secondary border border-dark">
+<div class="container bg-body-secondary p-2 border border-dark mt-4">
+    <div class="p-2">
+        <h4>Data Cart</h4>
+    </div>
     <table class="table table-hover table-striped border">
-        <h3>Data Cart</h3>
         <thead>
         <tr>
             <th scope="col">Variable Name</th>
@@ -47,7 +71,7 @@
                     <td>{{var.wksht_cd}}</td>
                     <td>{{var.line_num}}</td>
                     <td>{{var.clmn_num}}</td>
-                    <td class="text-center" style="width: 5%;"><button class="btn btn-secondary btn-sm">X</button></td>
+                    <td class="text-center" style="width: 5%;"><button class="btn btn-sm">X</button></td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -55,12 +79,12 @@
     <form action="" method="post" class="end-form">
         {{clear_form.hidden_tag()}}
         <div class="form-field">
-            {{clear_form.clear(class="btn btn-secondary")}}
+            {{clear_form.clear(class="btn")}}
         </div>
     </form>
 </div>
-<div class="container border border-dark bg-body-secondary" id="nav-foot">
-    <a class="btn btn-secondary" href="{{url_for('presets')}}" role="button">Back</a>
-    <a class="btn btn-secondary" href="{{url_for('filter')}}" role="button">Next</a>
+<div class="container d-flex justify-content-between bg-body-secondary border border-dark p-2 mb-4" id="preset-foot">
+    <a class="btn" href="{{url_for('presets')}}" role="button">< Back</a>
+    <a class="btn" href="{{url_for('filter')}}" role="button">Next ></a>
 </div>
 {% endblock %}

@@ -102,16 +102,22 @@ def filter():
     clear_form = ClearForm()
 
     years = [i.year for i in Year_Field.query.all()]
+    year_flag = True if len(years) > 0 else False
     states = [i.state for i in State_Field.query.all()]
+    state_flag = True if len(states) > 0 else False
     chains = [i.chain for i in Chain_Field.query.all()]
+    chain_flag = True if len(chains) > 0 else False
 
     if request.method == 'GET':
         return render_template('filter.html'
                                ,fac_filter_form=fac_filter_form
                                ,clear_form=clear_form
                                ,years=years
+                               ,year_flag=year_flag
                                ,states=states
-                               ,chains=chains)
+                               ,state_flag=state_flag
+                               ,chains=chains
+                               ,chain_flag=chain_flag)
     elif clear_form.validate_on_submit():
         delete_years = Year_Field.__table__.delete()
         db.session.execute(delete_years)
@@ -156,8 +162,11 @@ def download():
     download_form = DownloadForm()
 
     years = [i.year for i in Year_Field.query.all()]
+    year_flag = True if len(years) > 0 else False
     states = [i.state for i in State_Field.query.all()]
+    state_flag = True if len(states) > 0 else False
     chains = [i.chain for i in Chain_Field.query.all()]
+    chain_flag = True if len(chains) > 0 else False
 
     all_fields = Report_field.query.all()
 
@@ -169,8 +178,11 @@ def download():
                                ,download_form = download_form
                                ,all_fields=all_fields
                                ,years=years
+                               ,year_flag=year_flag
                                ,states=states
-                               ,chains=chains)
+                               ,state_flag=state_flag
+                               ,chains=chains
+                               ,chain_flag=chain_flag)
     
     elif download_form.validate_on_submit():
         db.session.execute(text('CALL build_variables();'))

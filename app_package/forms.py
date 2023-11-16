@@ -47,7 +47,7 @@ class FieldsForm(FlaskForm):
     line_number = DecimalField('Line Number', places=2, validators=[DataRequired()])
     column_number = DecimalField('Column Number', places=2,validators=[DataRequired()])
     var_name = StringField('Variable Name', validators=[DataRequired(),Length(min=0,max=40)])
-    submit = SubmitField('Add to Cart')
+    submit = SubmitField('+ Add to Cart')
  
 class ClearForm(FlaskForm):
     clear = SubmitField('Clear All', validators=[DataRequired()])
@@ -64,8 +64,8 @@ class PresetInfoForm(FlaskForm):
     facility_info = MultiCheckboxField('Facility Information', choices=fac_info_choices)
     utilization = MultiCheckboxField('Utilization Data', choices = utilization_choices)
     finance = MultiCheckboxField('Financial Statement', choices = finance_choices)
-    staff = MultiCheckboxField('Staff', choices=staff_choices)
-    submit = SubmitField('Add Variables')
+    staff = MultiCheckboxField('Employee Data', choices=staff_choices)
+    submit = SubmitField('+ Add Variables')
 
 class FacFilterForm(FlaskForm):
     years = [(i,i) for i in range(2022,2010,-1)]
@@ -73,7 +73,7 @@ class FacFilterForm(FlaskForm):
     states = [(i,i) for i in state_choices]
     state_field = MultiCheckboxField('State/Territory', choices=states)
     chain_field = MultiCheckboxField('Dialysis Chain', choices=chain_choices)
-    submit = SubmitField('Add Criteria')
+    submit = SubmitField('+ Add Criteria')
 
 """
 class WorksheetForm(FlaskForm):

@@ -1,40 +1,66 @@
-{% extends "base.html" %}
+{% extends "sidebar_base.html" %}
 {% block content %}
-<div class="container">
-    <h3>Select Variables</h3>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col p-3 bg-body-secondary border border-dark">
+            <h4>Select Variables</h4>
+        </div>
+    </div>
     <form action="" method="post">
         {{preset_form.hidden_tag()}}
         <fieldset>
-            <div class="row justify-content-start">
-                <div class="col-2 bg-body-secondary border border-dark preset-form">
-                    {{preset_form.facility_info.label(class="form-label")}}
-                    {{preset_form.facility_info(id="fac_info")}}
-                </div>
-                <div class="col-3 bg-body-secondary border border-dark preset-form">
-                    {{preset_form.finance.label(class="form-label")}}
-                    {{preset_form.finance(id="fac_info")}}
-                </div>
-                <div class="col-3 bg-body-secondary border border-dark preset-form">
-                    {{preset_form.staff.label(class="form-label")}}
-                    {{preset_form.staff(id="fac_info")}}
-                </div>
-
-                <div class="col bg-body-secondary border border-dark preset-form">
-                    {{preset_form.utilization.label(class="form-label")}}
-                    {{preset_form.utilization(id="fac_info")}}
+            <div class="row mt-2 bg-body-secondary border border-dark">
+                <div class="col bg-body-secondary ps-4 p-2">    
+                    <button class="p-2 btn btn-toggle rounded" type="button" data-bs-toggle="collapse" data-bs-target="#fac-info" aria-expanded="true" aria-controls="fac-info">
+                        Facility Information
+                    </button>           
+                    <div class="collapse show" id="fac-info">
+                        {{preset_form.facility_info(class="list")}}
+                        {{preset_form.submit(class="btn btn-toggle p-2")}}
+                    </div>
+                </div>   
+            </div>
+            <div class="row mt-2 justify-content-start border border-dark">
+                <div class="col bg-body-secondary ps-4 p-2 border">
+                    <button class="p-2 btn btn-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#fac-finance" aria-expanded="false" aria-controls="fac-finance">
+                        Financial Statement
+                    </button>                    
+                    <div class="collapse" id="fac-finance">
+                        {{preset_form.finance(class="list")}}
+                        {{preset_form.submit(class="btn btn-toggle p-2")}}
+                    </div>
                 </div>
             </div>
-            <div class="row justify-content-start">
-                <div class="col-3 preset-form">
-                    {{preset_form.submit(class="btn btn-secondary")}}
+            <div class="row mt-2 justify-content-start border border-dark">
+                <div class="col bg-body-secondary ps-4 p-2 border">
+                    <button class="p-2 btn btn-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#fac-staff" aria-expanded="false" aria-controls="fac-staff">
+                        Staff Data
+                    </button>                    
+                    <div class="collapse" id="fac-staff">
+                        {{preset_form.staff(class="list")}}
+                        {{preset_form.submit(class="btn btn-toggle p-2")}}
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2 justify-content-start border border-dark">
+                <div class="col bg-body-secondary ps-4 p-2 border">
+                    <button class="p-2 btn btn-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#fac-util" aria-expanded="false" aria-controls="fac-util">
+                        Utilization
+                    </button>                    
+                    <div class="collapse" id="fac-util">
+                        {{preset_form.utilization(class="list")}}
+                        {{preset_form.submit(class="btn p-2")}}
+                    </div>
                 </div>
             </div>
         </fieldset>
     </form>
 </div>
-<div class="container bg-body-secondary border border-dark">
+<div class="container bg-body-secondary p-2 border border-dark mt-4">
+    <div class="p-2">
+        <h4>Data Cart</h4>
+    </div>
     <table class="table table-hover table-striped border">
-        <h3>Data Cart</h3>
         <thead>
         <tr>
             <th scope="col">Variable Name</th>
@@ -51,7 +77,7 @@
                     <td>{{var.wksht_cd}}</td>
                     <td>{{var.line_num}}</td>
                     <td>{{var.clmn_num}}</td>
-                    <td class="text-center" style="width: 5%;"><button class="btn btn-secondary btn-sm">X</button></td>
+                    <td class="text-center" style="width: 5%;"><button class="btn btn-sm">X</button></td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -59,11 +85,11 @@
     <form action="" method="post" class="end-form">
         {{clear_form.hidden_tag()}}
         <div class="form-field">
-            {{clear_form.clear(class="btn btn-secondary")}}
+            {{clear_form.clear(class="btn")}}
         </div>
     </form>
 </div>
-<div class="container bg-body-secondary border border-dark" id="preset-foot">
-    <a class="btn btn-secondary" href="{{url_for('custom')}}" role="button">Next</a>
+<div class="container bg-body-secondary border border-dark p-2 mb-4" id="preset-foot">
+    <a class="btn" href="{{url_for('custom')}}" role="button">Next ></a>
 </div>
 {% endblock %}
